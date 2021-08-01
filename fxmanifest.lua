@@ -15,5 +15,9 @@ client_scripts {
     'config/config_cl.lua',
     'client/*.lua'
 }
+
+server_scripts {
+    'server/*.lua'
+}
  
 dependency 'PolyZone'

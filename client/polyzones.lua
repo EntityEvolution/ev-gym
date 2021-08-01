@@ -39,13 +39,16 @@ local sitUps <const> =  CircleZone:Create(vector3(-1199.11, -1565.07, 4.62), 1.0
     debugPoly=false
 })
 
-local inTime = GetClockHours() > Config.minHours and GetClockHours() < Config.maxHours
-
 sitUps:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
+        local inTime = GetClockHours() > Config.minHours and GetClockHours() < Config.maxHours
         if not insidePoly and inTime then
-            insidePoly = true
-            showNoti("E - Situps", "situps", vector3(-1199.11, -1565.07, 4.62))
+            if not GlobalState.sitUps then
+                insidePoly = true
+                showNoti("E - Situps", "situps", vector3(-1199.11, -1565.07, 4.62))
+            else
+                print('someone is doing exercise')
+            end
         end
 	else
         if insidePoly then
@@ -56,9 +59,14 @@ end)
 
 pushUps:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
+        local inTime = GetClockHours() > Config.minHours and GetClockHours() < Config.maxHours
         if not insidePoly and inTime then
-            insidePoly = true
-            showNoti("E - Pushups", "pushups", vector3(-1204.91, -1560.2, 4.61))
+            if not GlobalState.pushUps then
+                insidePoly = true
+                showNoti("E - Pushups", "pushups", vector3(-1204.91, -1560.2, 4.61), GlobalState.pushUp)
+            else
+                print('someone is doing exercise')
+            end
         end
 	else
         if insidePoly then
@@ -69,22 +77,14 @@ end)
 
 liftWeights:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
+        local inTime = GetClockHours() > Config.minHours and GetClockHours() < Config.maxHours
         if not insidePoly and inTime then
-            insidePoly = true
-            showNoti("E - weights", "weights", vector3(-1202.97, -1565.07, 4.61))
-        end
-	else
-        if insidePoly then
-            insidePoly = false
-        end
-    end
-end)
-
-yoga:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
-    if isPointInside then
-        if not insidePoly and inTime then
-            insidePoly = true
-            showNoti("E - Yoga", "yoga", nil)
+            if not GlobalState.weights then
+                insidePoly = true
+                showNoti("E - weights", "weights", vector3(-1202.97, -1565.07, 4.61), GlobalState.weights)
+            else
+                print('someone is doing exercise')
+            end
         end
 	else
         if insidePoly then
@@ -95,9 +95,28 @@ end)
 
 pullUp:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
     if isPointInside then
+        local inTime = GetClockHours() > Config.minHours and GetClockHours() < Config.maxHours
+        if not insidePoly and inTime then
+            if not GlobalState.pullUps then
+                insidePoly = true
+                showNoti("E - PullUps", "pullups", vector3(-1200.22, -1570.86, 4.61), GlobalState.pullUps)
+            else
+                print('someone is doing exercise')
+            end
+        end
+	else
+        if insidePoly then
+            insidePoly = false
+        end
+    end
+end)
+
+yoga:onPointInOut(PolyZone.getPlayerPosition, function(isPointInside, point)
+    if isPointInside then
+        local inTime = GetClockHours() > Config.minHours and GetClockHours() < Config.maxHours
         if not insidePoly and inTime then
             insidePoly = true
-            showNoti("E - PullUps", "pullups", vector3(-1200.22, -1570.86, 4.61))
+            showNoti("E - Yoga", "yoga", nil)
         end
 	else
         if insidePoly then
